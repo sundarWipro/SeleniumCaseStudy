@@ -47,7 +47,7 @@ public class Utilities {
     	     JSONParser parser = new JSONParser();
     	     Object obj = parser.parse(new FileReader(strFileDir +"/src/test/resources/Resources/Registration.json"));
 	         jsonObject = (JSONObject)obj;
-	         String name = (String)jsonObject.get("Name");
+	         System.out.println("TestData Loaded Successfully");
         }
         catch(FileNotFoundException e) {
         	e.printStackTrace();
@@ -64,7 +64,7 @@ public class Utilities {
     public static WebDriver setBrowserDriver() {
     	WebDriver driver = null;
     	if(TestData.get("Browser").equalsIgnoreCase("Chrome")) {
-    		 WebDriverManager.chromedriver().version("79.0.3945.36").setup();
+    		 WebDriverManager.chromedriver().version("80.0.3987.106").setup();
     		 driver = new ChromeDriver();
     		 System.out.println("Chrome Browser Opened Successfully");
     	}

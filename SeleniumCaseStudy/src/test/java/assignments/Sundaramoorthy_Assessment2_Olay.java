@@ -13,6 +13,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
 import java.util.concurrent.*; 
 
 import bsh.util.Util;
@@ -30,7 +32,9 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
    @BeforeClass(alwaysRun = true) 
   	public void setUpDriver() { 
 	   //Setup Driver driver =
-	   driver = setBrowserDriver(); 
+	   driver = setBrowserDriver();
+	   //Implicit Wait
+	   driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
  
 	@AfterClass(alwaysRun = true)
@@ -39,10 +43,9 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		closeBrowser(driver);
 	}
 	
-	@Test(groups= {"ukWebsite", "assignment_2", "runAllAssignment"}, alwaysRun = true)
-    public void ukWebsiteRegistration_Olay() throws InterruptedException {
+	@Test(groups= {"olayWebsite", "assignment_2", "runAllAssignment"}, alwaysRun = true)
+    public void olayWebsiteRegistrationLogin() throws InterruptedException {
 		
-		TestData.put("Assignment2_URL", "https://www.olay.co.uk/en-gb");
 		//Launch App URL
 		launchApplication(driver, "Assignment2_URL");
 	    //Verify HomePage is Opened
@@ -85,16 +88,7 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 			//Verify Registration Completed
 			driver.findElement(By.xpath(getElementLocator("RegCompletedUK"))).isDisplayed();
 		}
-		//SignIn
-		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
-		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys((String)jsonObject.get("PasswordUK"));
-		driver.findElement(By.xpath(getElementLocator("ClickSignInOlay"))).click();
-		//Verify SignIn is Success
-		driver.findElement(By.xpath(getElementLocator("SignInSuccessUK"))).isDisplayed();
-		//Click SignOut
-        driver.findElement(By.xpath(getElementLocator("SignOutButton"))).click();
-        driver.findElement(By.xpath(getElementLocator("ClickLogOutAlert"))).click();
-		driver.findElement(By.xpath(getElementLocator("SignInPageOlay"))).isDisplayed();
+		
 		//Validate InValid Password Verification
 		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
 		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys("Qwerty@12345pL");
@@ -113,15 +107,24 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		System.out.println(strReusableVar);
 		if(!strReusableVar.trim().contains(TestData.get("PasswordRecoveryMail")))
 			Assert.fail("Password Recovery Message is not displayed as Expected");
-	}
-
-	@Test(groups= {"chinaWebsite", "assignment_2", "runAllAssignment"}, alwaysRun = true)
-    public void chinaWebsiteRegistration_Olay() throws InterruptedException{
 		
-		TestData.put("Assignment2_URL", "https://www.olay.com.hk/zh-hk");
-		//Launch App URL
-		launchApplication(driver, "Assignment2_URL");
-	    //Verify HomePage is Opened
+		//ClickSignIn
+		driver.findElement(By.xpath(getElementLocator("ClickSignInUK"))).click();
+		//SignIn
+		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
+		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys((String)jsonObject.get("PasswordUK"));
+		driver.findElement(By.xpath(getElementLocator("ClickSignInOlay"))).click();
+		//Verify SignIn is Success
+		driver.findElement(By.xpath(getElementLocator("SignInSuccessUK"))).isDisplayed();
+		
+		
+		//ChinaSite
+		driver.findElement(By.xpath(getElementLocator("ClickLanguageUK"))).click();
+		driver.findElement(By.xpath(getElementLocator("LocationOpened"))).isDisplayed();
+		driver.findElement(By.xpath(getElementLocator("ClickChinaWebSite"))).click();
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		 //Verify HomePage is Opened
 		if(!driver.findElement(By.xpath(getElementLocator("OlayHomePageUK"))).isDisplayed())
 			Assert.fail("Olay China Home Page is Not Opened");
 	    //Click Register Button
@@ -159,15 +162,14 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		driver.findElement(By.xpath(getElementLocator("ClickSignInChina"))).click();
 		//Verify SignIn is Success
 		driver.findElement(By.xpath(getElementLocator("SignInSuccessChina"))).isDisplayed();
-	}
-	
-	@Test(groups= {"germanyWebsite", "assignment_2", "runAllAssignment"}, alwaysRun = true)
-    public void germanyWebsiteRegistration_Olay() {
 		
-		TestData.put("Assignment2_URL", "https://www.olaz.de/de-de");
-		//Launch App URL
-		launchApplication(driver, "Assignment2_URL");
-	    //Verify HomePage is Opened
+		//Navigate To Germany Website
+		driver.close();
+		driver.switchTo().window(tabs.get(0));
+		driver.findElement(By.xpath(getElementLocator("ClickGermanySite"))).click();
+		tabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		//Verify HomePage is Opened
 		if(!driver.findElement(By.xpath(getElementLocator("OlayHPGermany"))).isDisplayed())
 			Assert.fail("Olay Germany Home Page is Not Opened");
 		//Accept All Cookies
@@ -204,15 +206,14 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		driver.findElement(By.xpath(getElementLocator("CreateProfileOlay"))).click();
 		//Verify Registration Completed
 		//Giving Error Message While Registration.
-	}
-
-	@Test(groups= {"spainWebsite", "assignment_2", "runAllAssignment"}, alwaysRun = true)
-    public void spainWebsiteRegistration_Olay() {
 		
-		TestData.put("Assignment2_URL", "https://www.olay.es/es-es");
-		//Launch App URL
-		launchApplication(driver, "Assignment2_URL");
-	    //Verify HomePage is Opened
+		//Navigate To Spain Website
+		driver.close();
+		driver.switchTo().window(tabs.get(0));
+		driver.findElement(By.xpath(getElementLocator("ClickSpanishSite"))).click();
+		tabs = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		//Verify HomePage is Opened
 		if(!driver.findElement(By.xpath(getElementLocator("OlayHomePageUK"))).isDisplayed())
 			Assert.fail("Olay Spain Home Page is Not Opened");
 		//Accept All Cookies
@@ -256,6 +257,5 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		//Verify SignIn is Success
 		driver.findElement(By.xpath(getElementLocator("SignInSuccessSpain"))).isDisplayed();
 	}
-	
 
 }
