@@ -111,9 +111,7 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		//ClickSignIn
 		driver.findElement(By.xpath(getElementLocator("ClickSignInUK"))).click();
 		//SignIn
-		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
-		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys((String)jsonObject.get("PasswordUK"));
-		driver.findElement(By.xpath(getElementLocator("ClickSignInOlay"))).click();
+		loginOlay(strEmailId, (String)jsonObject.get("PasswordUK"));
 		//Verify SignIn is Success
 		driver.findElement(By.xpath(getElementLocator("SignInSuccessUK"))).isDisplayed();
 		
@@ -157,9 +155,7 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		if(!driver.findElement(By.xpath(getElementLocator("SignInPageChina"))).isDisplayed())
 			Assert.fail("Olay China SignIn Page is Not Opened");
 		//SignIn
-		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
-		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys(TestData.get("ChinaPassword"));
-		driver.findElement(By.xpath(getElementLocator("ClickSignInChina"))).click();
+		loginOlay(strEmailId, TestData.get("ChinaPassword"));
 		//Verify SignIn is Success
 		driver.findElement(By.xpath(getElementLocator("SignInSuccessChina"))).isDisplayed();
 		
@@ -251,11 +247,15 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 		if(!driver.findElement(By.xpath(getElementLocator("SignInPageSpain"))).isDisplayed())
 			Assert.fail("Olay Spain SignIn Page is Not Opened");
 		//SignIn
-		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(strEmailId);
-		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys(TestData.get("SpainPassword"));
-		driver.findElement(By.xpath(getElementLocator("ClickSignInSpain"))).click();
+		loginOlay(strEmailId, TestData.get("SpainPassword"));
 		//Verify SignIn is Success
 		driver.findElement(By.xpath(getElementLocator("SignInSuccessSpain"))).isDisplayed();
 	}
 
+	public void loginOlay(String emailId, String strPassword) {
+		//SignIn
+		driver.findElement(By.xpath(getElementLocator("SignInEmailOlay"))).sendKeys(emailId);
+		driver.findElement(By.xpath(getElementLocator("SignInPasswordOlay"))).sendKeys(strPassword);
+		driver.findElement(By.xpath(getElementLocator("ClickSignInOlay"))).click();
+	}
 }
