@@ -64,7 +64,7 @@ public class Utilities {
     public static WebDriver setBrowserDriver() {
     	WebDriver driver = null;
     	if(TestData.get("Browser").equalsIgnoreCase("Chrome")) {
-    		 WebDriverManager.chromedriver().version("80.0.3987.106").setup();
+    		 WebDriverManager.chromedriver().version("83.0.4103.39").setup();
     		 driver = new ChromeDriver();
     		 System.out.println("Chrome Browser Opened Successfully");
     	}
@@ -89,6 +89,19 @@ public class Utilities {
     	System.out.println("Application URL Launched Successfully");
 	   }
 	  
+		public static void launchApplicationOlay(WebDriver driver, String strAppURL) {
+			// Launch The App URL
+			driver.get(strAppURL);
+			System.out.println("Application URL Launched Successfully");
+			driver.manage().window().maximize();
+			// Delete Cookies
+			driver.manage().deleteAllCookies();
+			System.out.println("Site Cookies Deleted Successfully");
+			// Launch The App URL
+			driver.get(strAppURL);
+			System.out.println("Application URL Launched Successfully");
+		}
+    
     public static void closeBrowser(WebDriver driver) {
         //Close the Browser
     	driver.quit();
