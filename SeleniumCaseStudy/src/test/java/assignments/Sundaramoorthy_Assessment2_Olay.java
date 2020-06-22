@@ -41,7 +41,7 @@ public class Sundaramoorthy_Assessment2_Olay extends Utilities {
 	@AfterClass(alwaysRun = true)
 	public void closeBrowser() {
 		//Close Browser
-		//closeBrowser(driver);
+		closeBrowser(driver);
 	}
 	
 	@Test(groups= {"olayWebsite", "assignment_2", "runAllAssignment"}, dataProvider = "getSiteCountry", alwaysRun = true)
